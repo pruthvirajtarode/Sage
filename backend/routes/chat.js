@@ -3,7 +3,6 @@ const router = express.Router();
 const mongoose = require('mongoose');
 const { generateResponse, SYSTEM_PROMPT } = require('../services/openai');
 const vectorStore = require('../services/vectorStore');
-const airtableService = require('../services/airtableService');
 const { generatePDF, generatePowerPoint, compileDocumentSections } = require('../services/documentGenerator');
 const OpenAI = require('openai');
 const Conversation = require('../models/Conversation');
@@ -360,19 +359,6 @@ router.post('/stream', async (req, res) => {
             ? SYSTEM_PROMPT + `\n\n**Relevant Internal Content:**\n${context}`
             : SYSTEM_PROMPT;
 
-        // --- Lead Capture Logic ---
-        const emailMatch = message.match(/\S+@\S+\.\S+/);
-        if (emailMatch) {
-            console.log(`📋 Lead detected: ${emailMatch[0]} — syncing to Airtable...`);
-            airtableService.createLead({
-                email: emailMatch[0],
-                message: message,
-                source: 'SAGE AI Chatbot (Stream)',
-                conversationId: conversationId
-            }).catch(err => console.error('⚠️ Lead sync deferred:', err.message));
-        }
-        // ---------------------------------------------------------
-
         let fullResponse = isBusiness ? '正在检索 YAS Shoe Care 官方资料库...\n\n' : '';
 
         try {
@@ -464,18 +450,6 @@ router.post('/', async (req, res) => {
 
         const context = await buildContext(message);
         
-        // --- Lead Capture Logic ---
-        const emailMatch = message.match(/\S+@\S+\.\S+/);
-        if (emailMatch) {
-            airtableService.createLead({
-                email: emailMatch[0],
-                message: message,
-                source: 'MelissAI Chatbot (Standard)',
-                conversationId: conversationId
-            }).catch(e => console.error('⚠️ Lead sync failed:', e.message));
-        }
-        // -------------------------
-
         let response;
         try {
             response = await generateResponse(conv.messages.slice(-6).map(m => ({ role: m.role, content: m.content })), context);
