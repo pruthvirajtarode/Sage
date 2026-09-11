@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAGE AI | Client Integration Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #14532d;
+            --secondary: #22c55e;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #1e1e1e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding-bottom: 100px;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem 5%;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 3rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .back-btn:hover {
+            background: #f1f5f9;
+            transform: translateX(-4px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 5%;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        h2 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            margin: 1.5rem 0 1rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: #d4d4d4;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        ul,
+        ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(34, 197, 94, 0.1);
+            color: #16a34a;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .alert {
+            background: #fffbeb;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: #92400e;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="logo">SAGE AI</div>
+            <a href="admin.html" class="back-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M19 12H5M12 19l-7-7 7-7" />
+                </svg>
+                Dashboard
+            </a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="hero">
+            <span class="badge">Version 2.0.0</span>
+            <h1>Client Integration Guide</h1>
+            <p>Everything you need to successfully embed SAGE AI on your website.</p>
+        </div>
+
+        <section id="installation">
+            <h2>📦 Installation</h2>
+            <p>Add the following code snippet to your website's HTML (just before the closing <code>&lt;/body&gt;</code>
+                tag).</p>
+
+            <h3>Standard Installation</h3>
+            <div class="code-block" id="installationCode">
+                <button class="copy-btn" onclick="copyCode('installationCodeContent')">Copy</button>
+                <div id="installationCodeContent">
+                    &lt;!-- SAGE AI One-Line Integration --&gt;
+                    &lt;script src="http://32.236.47.233:3000/js/embed.js"&gt;&lt;/script&gt;
+                    &lt;script&gt;
+                    SAGE AI.init({
+                    apiUrl: 'http://32.236.47.233:3000',
+                    position: 'bottom-right'
+                    });
+                    &lt;/script&gt;</div>
+            </div>
+            <div class="alert">
+                <strong>💡 Note:</strong> Use the server URL <code>http://32.236.47.233:3000</code> for integration.
+            </div>
+        </section>
+
+        <section id="customization">
+            <h2>🎨 Customization</h2>
+            <div class="grid">
+                <div>
+                    <h3>Color Themes</h3>
+                    <p>The widget uses CSS variables for effortless styling. You can override the primary gradient to
+                        match your brand colors.</p>
+                </div>
+                <div>
+                    <h3>Positioning</h3>
+                    <p>Standard positions include <code>bottom-right</code>, <code>bottom-left</code>,
+                        <code>top-right</code>, and <code>top-left</code>.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="security">
+            <h2>🔒 Security & Reliability</h2>
+            <ul>
+                <li><strong>Sandboxed Iframe:</strong> The chat runs in a secure sandbox to protect your main site data.
+                </li>
+                <li><strong>Encrypted Traffic:</strong> All data is sent via SSL/HTTPS.</li>
+                <li><strong>Privacy First:</strong> No personal user data is collected without explicit permission.</li>
+                <li><strong>99.9% Uptime:</strong> Built on scalable enterprise infrastructure.</li>
+            </ul>
+        </section>
+
+        <section id="troubleshooting">
+            <h2>🛠️ Troubleshooting</h2>
+            <h3>Widget not appearing?</h3>
+            <p>Check your browser console (F12) for any block errors. Ensure the <code>apiUrl</code> in your script
+                matches your hosting domain exactly.</p>
+
+            <h3>Mobile layout issues?</h3>
+            <p>Ensure your website has the meta viewport tag:
+                <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code>.
+            </p>
+        </section>
+
+        <section id="support"
+            style="text-align: center; background: linear-gradient(135deg, #14532d, #22c55e); color: white;">
+            <h2 style="color: white; justify-content: center;">📞 Need Help?</h2>
+            <p style="color: rgba(255,255,255,0.9); margin-bottom: 1.5rem;">Our technical team is available 24/7 for
+                integration assistance.</p>
+            <a href="mailto:support@sagei.com" class="back-btn" style="background: white; border: none;">Contact
+                Support</a>
+        </section>
+    </div>
+
+    <script>
+        function copyCode(id) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = event.target;
+                btn.innerText = 'Copied!';
+                setTimeout(() => btn.innerText = 'Copy', 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,2 @@
+# This file ensures the vectors directory is tracked by git
+# The actual vector store will be created automatically

@@ -1,0 +1,79 @@
+{
+  "name": "sage-ai-chatbot",
+  "version": "1.0.0",
+  "description": "SAGE AI - YAS Shoe Care Business Assistant",
+  "main": "electron.js",
+  "scripts": {
+    "start": "node backend/index.js",
+    "dev": "nodemon backend/index.js",
+    "electron": "electron .",
+    "dist": "set ELECTRON_BUILDER_ALLOW_HANDLE_SYMBOLIC_LINK_AS_FILE=true&& electron-builder",
+    "build": "echo 'No build step required for Vercel'",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ai",
+    "chatbot",
+    "business-development",
+    "rag",
+    "openai"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^8.0.2",
+    "@capacitor/cli": "^8.0.2",
+    "@capacitor/core": "^8.0.2",
+    "@capacitor/ios": "^8.0.2",
+    "axios": "^1.6.2",
+    "bcryptjs": "^2.4.3",
+    "cheerio": "^1.0.0-rc.12",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "electron-is-dev": "^3.0.1",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.2",
+    "mammoth": "^1.6.0",
+    "mongoose": "^9.2.1",
+    "multer": "^1.4.5-lts.1",
+    "natural": "^6.10.0",
+    "node-nlp": "^4.27.0",
+    "officeparser": "^4.1.0",
+    "openai": "^4.20.1",
+    "pdf-parse": "^1.1.1",
+    "pdfkit": "^0.13.0",
+    "pptxgenjs": "^3.12.0",
+    "ssh2": "^1.17.0",
+    "uuid": "^9.0.1",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "electron": "^40.1.0",
+    "electron-builder": "^26.7.0",
+    "nodemon": "^3.0.2",
+    "puppeteer": "^25.10.0",
+    "typescript": "^5.9.3"
+  },
+  "build": {
+    "appId": "com.meliss.ai",
+    "productName": "MelissAI",
+    "copyright": "Copyright © 2026 MelissAI",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!dist/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "frontend/images/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    }
+  }
+}

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!-- Deployment: 2026-02-21 22:55 (v1.3.3 Production) -->
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>SAGE AI - YAS Shoe Care Business Assistant</title>
+    <meta name="description"
+        content="SAGE AI - YAS Shoe Care Chinese Business Assistant providing expert guidance on products, manufacturing, OEM/ODM, and business cooperation">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="images/icon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <div class="logo">
+                    <svg class="logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="url(#gradient1)" stroke="currentColor"
+                            stroke-width="2" stroke-linejoin="round" />
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <defs>
+                            <linearGradient id="gradient1" x1="2" y1="2" x2="22" y2="12">
+                                <stop offset="0%" stop-color="#14532d" />
+                                <stop offset="100%" stop-color="#22c55e" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text">SAGE AI</span>
+                </div>
+                <nav class="nav">
+                    <a href="admin.html" class="nav-link">Admin Dashboard</a>
+                    <button class="btn-new-chat" id="newChatBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M12 5v14m-7-7h14" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <span>New Chat</span>
+                    </button>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Welcome Screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-content">
+                    <!-- Professional Hero Section -->
+                    <div class="hero-section">
+                        <div class="hero-background">
+                            <img src="images/hero-business-team.png"
+                                alt="Professional business team collaborating with AI technology" class="hero-image">
+                            <div class="hero-overlay"></div>
+                        </div>
+                        <div class="hero-content-box">
+                            <div class="hero-icon">
+                                <svg width="64" height="64" viewBox="0 0 24 24" fill="none">
+                                    <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="url(#heroIconGradient)"
+                                        stroke="currentColor" stroke-width="1.5" />
+                                    <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="1.5"
+                                        stroke-linecap="round" />
+                                    <defs>
+                                        <linearGradient id="heroIconGradient" x1="2" y1="2" x2="22" y2="12">
+                                            <stop offset="0%" stop-color="#14532d" />
+                                            <stop offset="100%" stop-color="#22c55e" />
+                                        </linearGradient>
+                                    </defs>
+                                </svg>
+                            </div>
+                            <h1 class="hero-title">SAGE AI</h1>
+                            <p class="hero-tagline">YAS Shoe Care 智能商务助手</p>
+                        </div>
+                    </div>
+
+                    <h1 class="welcome-title">您好，我是 SAGE AI</h1>
+                    <p class="welcome-subtitle">YAS Shoe Care 的企业级中文 AI 助手，为您提供产品、定制服务、制造能力及商务合作等相关信息。</p>
+
+                    <div class="suggestion-cards">
+                        <div class="suggestion-card"
+                            data-prompt="请介绍一下 YAS Shoe Care 公司。">
+                            <div class="card-icon">
+                                <img src="images/icon-metrics.png" alt="Company" class="card-icon-img">
+                            </div>
+                            <h3>公司介绍</h3>
+                            <p>了解 YAS Shoe Care 的背景</p>
+                        </div>
+                        <div class="suggestion-card"
+                            data-prompt="你们有哪些鞋类护理产品？">
+                            <div class="card-icon">
+                                <img src="images/icon-analytics.png" alt="Products" class="card-icon-img">
+                            </div>
+                            <h3>产品中心</h3>
+                            <p>探索我们的鞋类护理系列</p>
+                        </div>
+                        <div class="suggestion-card" data-prompt="你们提供 OEM / ODM 服务吗？">
+                            <div class="card-icon">
+                                <img src="images/icon-pricing.png" alt="OEM/ODM" class="card-icon-img">
+                            </div>
+                            <h3>OEM / ODM</h3>
+                            <p>了解代工与定制服务</p>
+                        </div>
+                        <div class="suggestion-card"
+                            data-prompt="请介绍你们的生产能力与质量认证。">
+                            <div class="card-icon">
+                                <img src="images/icon-rocket.png" alt="Manufacturing" class="card-icon-img">
+                            </div>
+                            <h3>生产与质量</h3>
+                            <p>查看制造能力和认证标准</p>
+                        </div>
+                    </div>
+
+                    <!-- How it Works -->
+                    <div class="how-it-works">
+                        <h2 class="section-title">How it works</h2>
+                        <div class="steps-grid">
+                            <div class="step-card">
+                                <div class="step-num">1</div>
+                                <h3>提出问题</h3>
+                                <p>询问关于公司、产品、OEM/ODM、生产能力等方面的问题。</p>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-num">2</div>
+                                <h3>智能搜索</h3>
+                                <p>SAGE AI 会从 YAS Shoe Care 官方资料中获取准确信息。</p>
+                            </div>
+                            <div class="step-card">
+                                <div class="step-num">3</div>
+                                <h3>获取答案</h3>
+                                <p>获得专业、准确的中文商务答复。</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Container -->
+            <div class="chat-container" id="chatContainer" style="display: none;">
+                <div class="messages" id="messagesContainer"></div>
+            </div>
+
+            <!-- Resources Sidebar -->
+            <div class="resources-sidebar" id="resourcesSidebar" style="display: none;">
+                <div class="resources-header">
+                    <h3>📚 Available Resources</h3>
+                    <button class="resources-close" id="resourcesClose">×</button>
+                </div>
+                <div class="resources-content" id="resourcesContent">
+                    <p class="resources-loading">Loading resources...</p>
+                </div>
+            </div>
+        </main>
+
+        <!-- Input Area -->
+        <div class="input-area">
+            <div class="input-container">
+                <textarea id="messageInput" class="message-input"
+                    placeholder="请输入您想了解的内容 (如: 你们有哪些鞋类护理产品？)"
+                    rows="1"></textarea>
+                <button class="send-button" id="sendButton">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+            </div>
+            <div class="input-footer">
+                <p class="disclaimer">SAGE AI 提供的所有信息仅基于 YAS Shoe Care 官方资料。</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-info">
+                    <p>&copy; 2026 SAGE AI - YAS Shoe Care. All rights reserved.</p>
+                </div>
+                <div class="footer-links">
+                    <a href="admin.html">Admin</a>
+                    <a href="EMBED_CODE.html">Embed</a>
+                    <a href="https://github.com/DigitalDada/MelissaAi" target="_blank">Documentation</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/app.js?v=1.2.0"></script>
+</body>
+
+</html>

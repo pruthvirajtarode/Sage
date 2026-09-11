@@ -1,0 +1,20 @@
+node_modules/
+.env
+.DS_Store
+backend/uploads/*
+!backend/uploads/.gitkeep
+backend/data/vectors/*
+!backend/data/vectors/.gitkeep
+data/vectors/*
+!data/vectors/.gitkeep
+*.log
+.vscode/
+NMV Online Content/
+dist/
+android/app/build/
+ios/App/App/public/
+.vercel
+melissa_ai_database_export.gz
+
+legacy-melissa-backup/
+
