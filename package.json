@@ -56,8 +56,8 @@
   },
   "build": {
     "appId": "com.meliss.ai",
-    "productName": "MelissAI",
-    "copyright": "Copyright © 2026 MelissAI",
+    "productName": "SAGE AI",
+    "copyright": "Copyright © 2026 SAGE AI",
     "directories": {
       "output": "dist"
     },

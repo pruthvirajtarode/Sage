@@ -1,5 +1,5 @@
 require('dotenv').config();
-console.log('--- MelissAI Deployment 1.3.3 ---');
+console.log('--- SAGE AI Deployment 1.3.3 ---');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -56,7 +56,7 @@ app.use('/api/generate', generateRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'MelissAI Server Running', version: '1.3.3' });
+  res.json({ status: 'ok', message: 'SAGE AI Server Running', version: '1.3.3' });
 });
 
 // Serve main app
@@ -83,7 +83,7 @@ app.use((err, req, res, next) => {
 
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
-    console.log(`🚀 MelissAI Server running on port ${PORT}`);
+    console.log(`🚀 SAGE AI Server running on port ${PORT}`);
     console.log(`📊 Admin dashboard: http://localhost:${PORT}/admin.html`);
     console.log(`💬 Chat interface: http://localhost:${PORT}`);
   });

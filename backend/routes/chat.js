@@ -469,7 +469,7 @@ router.post('/', async (req, res) => {
 
         // 📄 Generate PDF only for real business questions with substantive AI response
         let generatedDocs = [];
-        if (isRealQuestion && response && response.length > 100 && !response.includes('temporary connection issue') && !response.includes('MelissAI, your business development assistant')) {
+        if (isRealQuestion && response && response.length > 100 && !response.includes('temporary connection issue') && !response.includes('SAGE AI, your business development assistant')) {
             try {
                 generatedDocs = await generateDocuments(message.substring(0, 60), response);
                 console.log(`✅ Generated ${generatedDocs.length} documents for: ${message.substring(0, 60)}`);

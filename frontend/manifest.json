@@ -1,7 +1,7 @@
 {
-    "name": "MelissAI",
-    "short_name": "MelissAI",
-    "description": "AI-Powered Business Intelligence by MelissAI",
+    "name": "SAGE AI",
+    "short_name": "SAGE AI",
+    "description": "AI-Powered Business Intelligence by SAGE AI",
     "start_url": "/index.html",
     "display": "standalone",
     "background_color": "#ffffff",

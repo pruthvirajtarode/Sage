@@ -9,8 +9,8 @@ const connectDB = async () => {
     if (!uri) {
         console.error('❌ MongoDB URI not found in environment variables');
         console.error('   Please set MONGODB_URI in your .env.server file');
-        console.error('   Example: MONGODB_URI=mongodb://localhost:27017/melissa_ai');
-        console.error('   Or: MONGODB_URI=mongodb://username:password@localhost:27017/melissa_ai?authSource=admin');
+        console.error('   Example: MONGODB_URI=mongodb://localhost:27017/sage_ai');
+        console.error('   Or: MONGODB_URI=mongodb://username:password@localhost:27017/sage_ai?authSource=admin');
         return;
     }
 

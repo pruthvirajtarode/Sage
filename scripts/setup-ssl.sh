@@ -1,6 +1,6 @@
 #!/bin/bash
 # ============================================================
-# SSL Setup Script for Melissa AI - Nginx + Let's Encrypt
+# SSL Setup Script for SAGE AI - Nginx + Let's Encrypt
 # Usage: bash setup-ssl.sh <domain> <email>
 # Example: bash setup-ssl.sh melissa.digital-dada.com admin@digital-dada.com
 # ============================================================
@@ -48,7 +48,7 @@ fi
 echo ""
 echo "[3/5] Creating Nginx reverse proxy config..."
 
-cat > /etc/nginx/sites-available/melissa-ai <<EOF
+cat > /etc/nginx/sites-available/sage-ai <<EOF
 server {
     listen 80;
     server_name $DOMAIN;
@@ -90,7 +90,7 @@ server {
 EOF
 
 # Enable the site
-ln -sf /etc/nginx/sites-available/melissa-ai /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/sage-ai /etc/nginx/sites-enabled/
 rm -f /etc/nginx/sites-enabled/default
 
 # Test Nginx config
