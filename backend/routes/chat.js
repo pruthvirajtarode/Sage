@@ -329,12 +329,21 @@ router.post('/stream', async (req, res) => {
         res.setHeader('Access-Control-Allow-Origin', '*');
         res.flushHeaders();
 
-        // Load from DB
-        const conv = await getConversation(conversationId);
-        conv.messages.push({ role: 'user', content: message });
-
         const isGreeting = isGreetingOrChitChat(message);
         const isBusiness = isBusinessQuestion(message);
+
+        // Run Conversation DB fetch and Vector Search IN PARALLEL for speed
+        let convPromise = getConversation(conversationId);
+        let contextPromise = (!isBusiness && !isGreeting) ? Promise.resolve('') : buildContext(message);
+
+        const [conv, context] = await Promise.all([convPromise, contextPromise]);
+        
+        conv.messages.push({ role: 'user', content: message });
+
+        // 🚀 FLUSH INSTANT TOKEN FOR LIGHTNING FAST UX
+        if (isBusiness) {
+            res.write(`data: ${JSON.stringify({ token: "正在检索 YAS Shoe Care 官方资料库..." })}\n\n`);
+        }
 
         if (!isBusiness && !isGreeting) {
             const fallback = getSmartFallback(message);
@@ -347,7 +356,6 @@ router.post('/stream', async (req, res) => {
             return;
         }
 
-        const context = await buildContext(message);
         const systemContent = context
             ? SYSTEM_PROMPT + `\n\n**Relevant Internal Content:**\n${context}`
             : SYSTEM_PROMPT;
@@ -359,62 +367,52 @@ router.post('/stream', async (req, res) => {
             airtableService.createLead({
                 email: emailMatch[0],
                 message: message,
-                source: 'MelissAI Chatbot (Stream)',
+                source: 'SAGE AI Chatbot (Stream)',
                 conversationId: conversationId
             }).catch(err => console.error('⚠️ Lead sync deferred:', err.message));
         }
         // ---------------------------------------------------------
 
-        let fullResponse = '';
+        let fullResponse = isBusiness ? '正在检索 YAS Shoe Care 官方资料库...\n\n' : '';
 
         try {
             const stream = await openai.chat.completions.create({
                 model: 'gpt-4o-mini',
                 messages: [{ role: 'system', content: systemContent }, ...conv.messages.slice(-6).map(m => ({ role: m.role, content: m.content }))],
                 temperature: 0.1,
-                max_tokens: 400,
+                max_tokens: 300,
                 top_p: 0.9,
                 stream: true,
             });
 
+            let isFirstChunk = true;
             for await (const chunk of stream) {
                 const token = chunk.choices[0]?.delta?.content || '';
                 if (token) {
+                    if (isFirstChunk && isBusiness) {
+                         res.write(`data: ${JSON.stringify({ token: "\n\n" })}\n\n`);
+                         isFirstChunk = false;
+                    }
                     fullResponse += token;
                     res.write(`data: ${JSON.stringify({ token })}\n\n`);
                 }
             }
         } catch (streamErr) {
             console.error('⚠️ OpenAI stream error:', streamErr.message);
-            // Smart fallback: greeting vs business question
-            if (!fullResponse) {
+            if (!fullResponse || fullResponse === '正在检索 YAS Shoe Care 官方资料库...\n\n') {
                 fullResponse = getSmartFallback(message);
                 res.write(`data: ${JSON.stringify({ token: fullResponse })}\n\n`);
             }
         }
 
-        // Only fetch/generate resources for real business questions — NOT greetings
         const isRealQuestion = isBusinessQuestion(message) && !isGreetingOrChitChat(message);
 
         // 📚 Get suggested resources (only for business questions) — kept awaited but fast (DB query)
         const suggestedResources = isRealQuestion ? await suggestResources(message, 5) : [];
 
-        // 📄 Generate PDF only for real business questions with a substantive AI response
-        let generatedDocs = [];
-        if (isRealQuestion && fullResponse && fullResponse.length > 100 && !fullResponse.includes('temporary connection issue') && !fullResponse.includes('MelissAI, your business development assistant')) {
-            try {
-                generatedDocs = await generateDocuments(message.substring(0, 60), fullResponse);
-                console.log(`✅ Generated ${generatedDocs.length} documents for topic: ${message.substring(0, 60)}`);
-            } catch (error) {
-                console.error('❌ Document generation error:', error.message);
-            }
-        } else {
-            if (!isRealQuestion) console.log(`💬 Greeting/chitchat detected — skipping PDF generation for: "${message}"`);
-        }
-
-        // Combine all resources and deduplicate by title
-        const allResources = deduplicateResources([...suggestedResources, ...generatedDocs]);
-        console.log(`📚 Sending ${allResources.length} resources (${suggestedResources.length} suggested + ${generatedDocs.length} generated, after deduplication)`);
+        // 🚀 Disabled slow on-the-fly PDF generation to prevent hanging the chat completion
+        const allResources = deduplicateResources([...suggestedResources]);
+        console.log(`📚 Sending ${allResources.length} resources`);
 
         // Send done event with resources - FLUSH immediately
         res.write(`data: ${JSON.stringify({ done: true, resources: allResources })}\n\n`);
