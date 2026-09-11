@@ -205,8 +205,8 @@ To test the widget integration:
 
 For integration issues or customization requests:
 - Email: support@sageai.com
-- Documentation: https://github.com/DigitalDada/SAGEAi#readme
-- Issues: https://github.com/DigitalDada/SAGEAi/issues
+- Documentation: https://github.com/pruthvirajtarode/Sage#readme
+- Issues: https://github.com/pruthvirajtarode/Sage/issues
 
 ## 📊 Analytics
 
