@@ -3,15 +3,15 @@ const mongoose = require('mongoose');
 const settingsSchema = new mongoose.Schema({
     botName: {
         type: String,
-        default: 'MelissAI'
+        default: 'SAGE AI'
     },
     welcomeMessage: {
         type: String,
-        default: "Hi! I'm MelissAI, your business development assistant. How can I help you today?"
+        default: "你好！我是 SAGE AI，YAS Shoe Care 的专属商务助手。有什么我可以帮您的吗？"
     },
     avatarUrl: {
         type: String,
-        default: 'images/bot-silhouette.svg'
+        default: 'images/sage_avatar.png'
     },
     // For storing uploaded avatars directly in MongoDB (Base64/Buffer)
     avatarData: {
