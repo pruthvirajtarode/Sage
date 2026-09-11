@@ -3,7 +3,7 @@ const API_URL = window.location.origin;
 let conversationId = generateConversationId();
 let isProcessing = false;
 let botSettings = {
-    avatarUrl: 'images/bot-silhouette.svg',
+    avatarUrl: 'images/sage_avatar.png',
     botName: 'SAGE AI',
     welcomeMessage: "您好！我是 SAGE AI，YAS Shoe Care 的智能商务助手。请问有什么我可以帮您的？"
 };

@@ -879,7 +879,7 @@ async function loadSettings() {
 
             botNameInput.value = settings.botName || 'SAGE AI';
             welcomeMessageInput.value = settings.welcomeMessage || '';
-            currentAvatarImg.src = settings.avatarUrl || 'images/bot-silhouette.svg';
+            currentAvatarImg.src = settings.avatarUrl || 'images/sage_avatar.png';
 
             // Initialize previous states
             previousAvatarUrl = null;
