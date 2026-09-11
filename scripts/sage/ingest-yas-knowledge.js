@@ -1,9 +1,9 @@
 const fs = require('fs');
 const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 const mongoose = require('mongoose');
 const Knowledge = require('../../backend/models/Knowledge');
 const { generateEmbedding } = require('../../backend/services/openai');
-require('dotenv').config({ path: require('path').join(__dirname, '../../.env') });
 
 const KNOWLEDGE_DIR = path.join(__dirname, 'knowledge-base', 'website-content');
 
