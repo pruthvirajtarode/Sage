@@ -15,7 +15,7 @@ const authenticateAdmin = (req, res, next) => {
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET || 'fallback_secret_key_for_sage');
         req.admin = decoded;
         next();
     } catch (error) {
@@ -31,11 +31,14 @@ router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
 
-        // Simple authentication (use database in production)
-        if (username === process.env.ADMIN_USERNAME && password === process.env.ADMIN_PASSWORD) {
+        // Use environment variables or fallback to default credentials if not set
+        const validUser = process.env.ADMIN_USERNAME || 'admin';
+        const validPass = process.env.ADMIN_PASSWORD || 'admin123';
+
+        if (username === validUser && password === validPass) {
             const token = jwt.sign(
                 { username },
-                process.env.JWT_SECRET,
+                process.env.JWT_SECRET || 'fallback_secret_key_for_sage',
                 { expiresIn: '24h' }
             );
 
