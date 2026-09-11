@@ -338,9 +338,10 @@ router.post('/stream', async (req, res) => {
 
         // Removed hardcoded fallback short-circuit so the LLM handles all messages properly in the user's language.
 
-        const systemContent = context
+        const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei', dateStyle: 'full', timeStyle: 'short' });
+        const systemContent = `[System Info: The current date and time is ${currentDate}]\n\n` + (context
             ? SYSTEM_PROMPT + `\n\n**Relevant Internal Content:**\n${context}`
-            : SYSTEM_PROMPT;
+            : SYSTEM_PROMPT);
 
         let fullResponse = isBusiness ? '正在检索 YAS Shoe Care 官方资料库...\n\n' : '';
 

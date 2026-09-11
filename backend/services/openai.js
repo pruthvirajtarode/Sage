@@ -37,9 +37,10 @@ You are a professional AI assistant for YAS Shoe Care, not a generic chatbot.`;
  */
 async function generateResponse(messages, context = '') {
     try {
+        const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei', dateStyle: 'full', timeStyle: 'short' });
         const systemMessage = {
             role: 'system',
-            content: SYSTEM_PROMPT
+            content: `[System Info: The current date and time is ${currentDate}]\n\n` + SYSTEM_PROMPT
         };
 
         // Add context if available
@@ -85,9 +86,10 @@ async function generateEmbedding(text) {
  * Stream AI response (for future enhancement)
  */
 async function streamResponse(messages, context = '') {
+    const currentDate = new Date().toLocaleString('en-US', { timeZone: 'Asia/Taipei', dateStyle: 'full', timeStyle: 'short' });
     const systemMessage = {
         role: 'system',
-        content: SYSTEM_PROMPT
+        content: `[System Info: The current date and time is ${currentDate}]\n\n` + SYSTEM_PROMPT
     };
 
     if (context) {
