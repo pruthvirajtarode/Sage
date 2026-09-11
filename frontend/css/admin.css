@@ -29,7 +29,7 @@
     width: 48px;
     height: 48px;
     margin: 0 auto var(--spacing-md);
-    color: #22c55e;
+    color: #333333;
 }
 
 .login-header h1 {
@@ -73,7 +73,7 @@
 .form-input:focus {
     outline: none;
     border-color: var(--text-accent);
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
 }
 
 /* Password Toggle */
@@ -162,7 +162,7 @@
 
 .btn-secondary:hover {
     background: var(--bg-card);
-    border-color: rgba(34, 197, 94, 0.5);
+    border-color: rgba(0, 0, 0, 0.5);
 }
 
 .btn-danger {
@@ -350,9 +350,9 @@
 
 .upload-status.success {
     display: block;
-    background: rgba(34, 197, 94, 0.1);
-    border: 1px solid rgba(34, 197, 94, 0.3);
-    color: #22c55e;
+    background: rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    color: #333333;
 }
 
 .upload-status.error {
@@ -405,7 +405,7 @@
     margin: 0 auto var(--spacing-md);
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid #22c55e;
+    border: 3px solid #333333;
     background: var(--bg-secondary);
 }
 
@@ -429,7 +429,7 @@
 }
 
 .avatar-file-label:hover {
-    border-color: #22c55e;
+    border-color: #333333;
     background: var(--bg-tertiary);
 }
 
@@ -538,9 +538,9 @@
 }
 
 .btn-icon.approve:hover {
-    background: rgba(34, 197, 94, 0.1);
-    border-color: rgba(34, 197, 94, 0.3);
-    color: #22c55e;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: rgba(0, 0, 0, 0.3);
+    color: #333333;
 }
 
 .btn-icon.download:hover {
@@ -789,8 +789,8 @@
 .document-summary {
     margin-top: 12px;
     padding: 12px;
-    background: rgba(20, 83, 45, 0.05);
-    border-left: 3px solid #14532d;
+    background: rgba(0, 0, 0, 0.05);
+    border-left: 3px solid #000000;
     border-radius: 4px;
     font-size: 0.9rem;
 }
@@ -798,7 +798,7 @@
 .document-summary strong {
     display: block;
     margin-bottom: 4px;
-    color: #14532d !important;
+    color: #000000 !important;
     font-size: 0.75rem !important;
     text-transform: uppercase;
     letter-spacing: 0.5px;
@@ -815,15 +815,15 @@
 }
 
 .category-badge {
-    background: rgba(34, 197, 94, 0.1);
-    color: #14532d;
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
     padding: 2px 8px;
     border-radius: 4px;
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.025em;
-    border: 1px solid rgba(34, 197, 94, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .status-badge {
@@ -835,8 +835,8 @@
 }
 
 .status-badge.active {
-    background: rgba(20, 83, 45, 0.1);
-    color: #14532d;
+    background: rgba(0, 0, 0, 0.1);
+    color: #000000;
 }
 
 .status-badge.pending {
@@ -947,7 +947,7 @@
 }
 
 .toast.toast-success {
-    border-left: 4px solid #22c55e;
+    border-left: 4px solid #333333;
 }
 
 .toast.toast-error {
@@ -980,8 +980,8 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #22c55e;
-    background: linear-gradient(135deg, #14532d, #22c55e);
+    background: #333333;
+    background: linear-gradient(135deg, #000000, #333333);
     color: white;
     border: none;
     cursor: pointer;
@@ -1034,5 +1034,5 @@
 
 #docSearchInput:focus {
     border-color: var(--text-accent) !important;
-    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
 }
