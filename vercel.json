@@ -5,6 +5,7 @@
             "src": "backend/index.js",
             "use": "@vercel/node",
             "config": {
+                "maxDuration": 60,
                 "maxLambdaSize": "50mb",
                 "includeFiles": [
                     "frontend/**",

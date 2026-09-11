@@ -89,49 +89,14 @@ class VectorStore {
                 .split(/\s+/)
                 .filter(w => w.length > 1 && !STOP_WORDS.has(w));
 
-            // HYBRID SEARCH: Fetch chunks per important keyword to ensure diversity (prevents one widespread keyword from monopolizing the 400 chunk limit)
-            let fullChunks = [];
-            if (queryWords.length > 0) {
-                const regexes = queryWords.map(w => new RegExp(w, 'i'));
-
-                // Try to find perfect matches first (contains ALL keywords)
-                const andConditions = regexes.map(r => ({
-                    $or: [{ text: r }, { "metadata.filename": r }, { "metadata.source": r }]
-                }));
-                fullChunks = await Knowledge.find(
-                    { $and: andConditions, "metadata.isActive": true, "metadata.tenant": "sage" },
-                    { embedding: 1, text: 1, 'metadata.source': 1, 'metadata.filename': 1, 'metadata.summary': 1 }
-                ).limit(300).lean();
-
-                // If perfect multi-word matches are sparse (fewer than 50 chunks), 
-                // pool chunks PER KEYWORD to guarantee a diverse search pool for cosine similarity.
-                if (fullChunks.length < 50) {
-                    for (const r of regexes) {
-                        const chunksForWord = await Knowledge.find(
-                            {
-                                $or: [{ text: r }, { "metadata.filename": r }, { "metadata.source": r }],
-                                "metadata.isActive": true,
-                                "metadata.tenant": "sage"
-                            },
-                            { embedding: 1, text: 1, 'metadata.source': 1, 'metadata.filename': 1, 'metadata.summary': 1 }
-                        ).limit(150).lean(); // Increased limit per word for broader coverage
-                        fullChunks.push(...chunksForWord);
-                    }
-
-                    // Deduplicate results
-                    const uniqueMap = new Map();
-                    fullChunks.forEach(c => uniqueMap.set(c._id.toString(), c));
-                    fullChunks = Array.from(uniqueMap.values());
-                }
-            }
-
-            // Absolute Fallback: If no keyword match or query was entirely stop-words, fetch latest 1000 chunks
-            if (fullChunks.length === 0) {
-                fullChunks = await Knowledge.find({ 'metadata.isActive': true, 'metadata.tenant': 'sage' }, { embedding: 1, text: 1, 'metadata.source': 1, 'metadata.filename': 1, 'metadata.summary': 1 })
-                    .sort({ createdAt: -1 })
-                    .limit(1000)
-                    .lean();
-            }
+            // For SAGE AI, we only have a small number of chunks (from the website crawl).
+            // Instead of doing multiple slow $regex full-collection scans, 
+            // we will fetch all active SAGE chunks (up to 400) and rank them purely in-memory using cosine similarity.
+            // This drops DB query time from ~5000ms to ~50ms.
+            const fullChunks = await Knowledge.find(
+                { 'metadata.isActive': true, 'metadata.tenant': 'sage' },
+                { embedding: 1, text: 1, 'metadata.source': 1, 'metadata.filename': 1, 'metadata.summary': 1 }
+            ).limit(400).lean();
 
             if (fullChunks.length === 0) return [];
 
