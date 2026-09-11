@@ -877,7 +877,7 @@ async function loadSettings() {
             const settings = await response.json();
             originalSettings = { ...settings }; // Store original state
 
-            botNameInput.value = settings.botName || 'MelissAI';
+            botNameInput.value = settings.botName || 'SAGE AI';
             welcomeMessageInput.value = settings.welcomeMessage || '';
             currentAvatarImg.src = settings.avatarUrl || 'images/bot-silhouette.svg';
 
@@ -1059,7 +1059,7 @@ async function restoreAvatar(url) {
 function handleUndoIdentity() {
     if (!previousIdentity) {
         // If no previous save, just reset to original loaded state
-        botNameInput.value = originalSettings.botName || 'MelissAI';
+        botNameInput.value = originalSettings.botName || 'SAGE AI';
         welcomeMessageInput.value = originalSettings.welcomeMessage || '';
         showStatus(settingsStatus, 'Restored to last saved values', 'success');
         return;

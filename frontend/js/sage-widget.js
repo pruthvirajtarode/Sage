@@ -2,8 +2,8 @@
 const API_URL = window.location.origin;
 let botSettings = {
     avatarUrl: 'images/bot-silhouette.svg',
-    botName: 'MelissAI',
-    welcomeMessage: "Hi! I'm MelissAI, your business development assistant. How can I help you today?"
+    botName: 'SAGE AI',
+    welcomeMessage: "你好！我是 SAGE AI，YAS Shoe Care 的专属商务助手。有什么我可以帮您的吗？"
 };
 
 // Global variables

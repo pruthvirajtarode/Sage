@@ -1,9 +1,9 @@
 /**
- * MelissAI - Client Embed Script
- * This script dynamically creates the chat button and iframe for the MelissAI widget.
+ * SAGE AI - Client Embed Script
+ * This script dynamically creates the chat button and iframe for the SAGE AI widget.
  */
 (function () {
-    // Detect script origin to find where MelissAI is hosted
+    // Detect script origin to find where SAGE AI is hosted
     const scriptTag = document.currentScript;
     const scriptUrl = scriptTag ? scriptTag.src : '';
     const scriptOrigin = scriptUrl ? new URL(scriptUrl).origin : window.location.origin;
@@ -13,7 +13,7 @@
         apiUrl: scriptOrigin,
         buttonColor: 'linear-gradient(135deg, #14532d 0%, #22c55e 100%)',
         position: 'bottom-right', // bottom-right, bottom-left
-        botName: 'MelissAI'
+        botName: 'SAGE AI'
     };
 
     // Merge user config if available
@@ -200,7 +200,7 @@
     checkMobile();
 
     // Export public API
-    window.MelissAI = {
+    window.SAGE AI = {
         open: openWidget,
         close: closeWidget,
         toggle: () => isOpen ? closeWidget() : openWidget()
