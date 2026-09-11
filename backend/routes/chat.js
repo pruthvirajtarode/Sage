@@ -187,15 +187,7 @@ function isBusinessQuestion(message) {
 
 // ─── Helper: Smart fallback when OpenAI is unavailable ────────────────────────
 function getSmartFallback(message) {
-    if (isGreetingOrChitChat(message)) {
-        return "您好！我是 SAGE AI，YAS Shoe Care 的智能商务助手。您可以向我了解我们的产品、OEM/ODM 服务、制造能力或合作方式！";
-    }
-
-    if (isBusinessQuestion(message)) {
-        return "抱歉，系统暂时无法连接服务器，请稍后再试。";
-    }
-    
-    return "我是专门为您提供 YAS Shoe Care 相关信息的商务助手。请问您想了解关于我们产品或服务的哪些信息？";
+    return "I am a business assistant specifically providing information about YAS Shoe Care. / 我是专门为您提供 YAS Shoe Care 相关信息的商务助手。";
 }
 
 // ─── Helper: Get file type from MIME type ─────────────────────────────────────
@@ -344,16 +336,7 @@ router.post('/stream', async (req, res) => {
             res.write(`data: ${JSON.stringify({ token: "正在检索 YAS Shoe Care 官方资料库..." })}\n\n`);
         }
 
-        if (!isBusiness && !isGreeting) {
-            const fallback = getSmartFallback(message);
-            res.write(`data: ${JSON.stringify({ token: fallback })}\n\n`);
-            res.write(`data: ${JSON.stringify({ done: true, resources: [] })}\n\n`);
-            res.end();
-
-            conv.messages.push({ role: 'assistant', content: fallback });
-            await saveConversation(conv);
-            return;
-        }
+        // Removed hardcoded fallback short-circuit so the LLM handles all messages properly in the user's language.
 
         const systemContent = context
             ? SYSTEM_PROMPT + `\n\n**Relevant Internal Content:**\n${context}`
@@ -435,18 +418,7 @@ router.post('/', async (req, res) => {
         const isGreeting = isGreetingOrChitChat(message);
         const isBusiness = isBusinessQuestion(message);
 
-        if (!isBusiness && !isGreeting) {
-            const fallback = getSmartFallback(message);
-            conv.messages.push({ role: 'assistant', content: fallback });
-            await saveConversation(conv);
-            return res.json({
-                response: fallback,
-                conversationId,
-                responseTime: Date.now() - startTime,
-                contextUsed: false,
-                resources: []
-            });
-        }
+        // Removed hardcoded fallback short-circuit so the LLM handles all messages properly in the user's language.
 
         const context = await buildContext(message);
         
