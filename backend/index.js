@@ -3,19 +3,10 @@ console.log('--- MelissAI Deployment 1.3.3 ---');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const connectDB = require('./config/db');
 const chatRoutes = require('./routes/chat');
-const adminRoutes = require('./routes/admin');
-const uploadRoutes = require('./routes/upload');
-const settingsRoutes = require('./routes/settings');
-const resourceRoutes = require('./routes/resources');
-const generateRoutes = require('./routes/generate');
-const mongoose = require('mongoose');
 
 const app = express();
 
-// Start DB connection immediately (non-blocking, but tracked)
-const dbReady = connectDB();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
@@ -26,33 +17,8 @@ app.use(express.urlencoded({ extended: true, limit: '25mb' }));
 // Serve static files from frontend directory
 app.use(express.static(path.join(__dirname, '../frontend')));
 
-// ✅ DB-ready guard: wait for MongoDB before handling any API request
-// This prevents the "buffering timed out" error on cold starts
-app.use('/api', async (req, res, next) => {
-  if (mongoose.connection.readyState === 1) {
-    return next(); // Already connected — proceed immediately
-  }
-  try {
-    await Promise.race([
-      dbReady,
-      new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Database connection timed out. Please try again.')), 15000)
-      )
-    ]);
-    next();
-  } catch (err) {
-    console.error('❌ DB guard rejected request:', err.message);
-    res.status(503).json({ error: 'Service temporarily unavailable. Database is not ready. Please retry in a moment.' });
-  }
-});
-
 // API Routes
 app.use('/api/chat', chatRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/upload', uploadRoutes);
-app.use('/api/settings', settingsRoutes);
-app.use('/api/resources', resourceRoutes);
-app.use('/api/generate', generateRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
