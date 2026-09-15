@@ -10,6 +10,8 @@ const uploadRoutes = require('./routes/upload');
 const settingsRoutes = require('./routes/settings');
 const resourceRoutes = require('./routes/resources');
 const generateRoutes = require('./routes/generate');
+const productRoutes = require('./routes/products');
+const paymentRoutes = require('./routes/payment');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -53,6 +55,8 @@ app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/generate', generateRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/payment', paymentRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

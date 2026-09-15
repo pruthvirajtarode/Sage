@@ -224,6 +224,14 @@ window.addEventListener('load', function () {
             isProcessing = false;
             widgetSend.disabled = false;
             widgetInput.focus();
+
+            // E-Commerce Demo Trigger: if message contains 'clean', 'service', 'book', 'repair'
+            const lowerMsg = message.toLowerCase();
+            if (lowerMsg.includes('clean') || lowerMsg.includes('service') || lowerMsg.includes('book') || lowerMsg.includes('repair')) {
+                setTimeout(() => {
+                    fetchAndDisplayProducts();
+                }, 1000);
+            }
         }
     }
 
@@ -427,8 +435,108 @@ window.addEventListener('load', function () {
         }
     }
 
+    // E-Commerce: Fetch and display products
+    async function fetchAndDisplayProducts() {
+        try {
+            const url = `${API_URL}/api/products`;
+            const res = await fetch(url);
+            if (!res.ok) return;
+            const products = await res.json();
+            
+            if (products && products.length > 0) {
+                console.log('🛒 Displaying products:', products.length);
+                displayWidgetProducts(products);
+            }
+        } catch (e) {
+            console.warn('Product fetch failed:', e.message);
+        }
+    }
 
+    function displayWidgetProducts(products) {
+        if (!products || products.length === 0) return;
 
+        const productsContainer = document.createElement('div');
+        productsContainer.className = 'widget-products-container';
+        productsContainer.style.cssText = `
+            display: flex;
+            flex-direction: row;
+            overflow-x: auto;
+            gap: 12px;
+            padding: 8px 0;
+            margin-top: 12px;
+            scroll-snap-type: x mandatory;
+        `;
+
+        products.forEach(product => {
+            const card = document.createElement('div');
+            card.className = 'widget-product-card';
+            card.style.cssText = 'flex: 0 0 auto; scroll-snap-align: start;';
+
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="widget-product-image" onerror="this.src='https://via.placeholder.com/240x140?text=No+Image'">
+                <div class="widget-product-details">
+                    <div class="widget-product-title" title="${product.name}">${product.name}</div>
+                    <div class="widget-product-price">$${product.price.toFixed(2)} ${product.currency}</div>
+                    <div class="widget-product-desc">${product.description}</div>
+                    <button class="widget-product-buy-btn" data-id="${product.id}" onclick="handleBuyProduct('${product.id}')">
+                        Book Now
+                    </button>
+                </div>
+            `;
+            productsContainer.appendChild(card);
+        });
+
+        widgetMessages.appendChild(productsContainer);
+        widgetMessages.scrollTop = widgetMessages.scrollHeight;
+    }
+
+    // Export handleBuyProduct to window scope for onclick
+    window.handleBuyProduct = async function(productId) {
+        try {
+            const btn = document.querySelector(`.widget-product-buy-btn[data-id="${productId}"]`);
+            if (btn) {
+                btn.textContent = 'Processing...';
+                btn.disabled = true;
+            }
+
+            const res = await fetch(`${API_URL}/api/payment/create-checkout-session`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ productId, quantity: 1 })
+            });
+
+            const data = await res.json();
+            
+            if (data.success && data.url) {
+                // Simulate opening the payment gateway in a new tab
+                window.open(data.url, '_blank');
+                
+                // Simulate successful payment webhook after 5 seconds
+                setTimeout(async () => {
+                    await fetch(`${API_URL}/api/payment/webhook`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            eventType: 'payment_intent.succeeded',
+                            paymentData: {
+                                productId,
+                                quantity: 1,
+                                amountPaid: 29.99,
+                                currency: 'USD',
+                                customerName: 'Chat User',
+                                customerEmail: 'user@example.com'
+                            }
+                        })
+                    });
+                    
+                    addMessage('assistant', '✅ Booking Successful! Our representative has been notified and will contact you shortly to arrange pickup/drop-off for your shoes.');
+                }, 5000);
+            }
+        } catch (e) {
+            console.error('Checkout error:', e);
+            alert('Failed to initiate checkout.');
+        }
+    };
     function showTypingIndicator() {
         const typingId = `typing-${Date.now()}`;
         const typingDiv = document.createElement('div');

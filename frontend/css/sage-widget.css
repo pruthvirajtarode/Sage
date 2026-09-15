@@ -682,3 +682,69 @@ html:not(.is-embedded) body {
 .line-icon {
     flex-shrink: 0;
 }
+
+/* In-Chat Product Card */
+.widget-product-card {
+    background: #ffffff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 8px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    width: 240px;
+}
+
+.widget-product-image {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: #f3f4f6;
+}
+
+.widget-product-details {
+    padding: 12px;
+}
+
+.widget-product-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.widget-product-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #059669; /* Emerald 600 */
+    margin-bottom: 8px;
+}
+
+.widget-product-desc {
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 12px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.widget-product-buy-btn {
+    width: 100%;
+    padding: 8px 0;
+    background: #000000;
+    color: #ffffff;
+    border: none;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.widget-product-buy-btn:hover {
+    background: #333333;
+}
