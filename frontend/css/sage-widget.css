@@ -641,3 +641,44 @@ html:not(.is-embedded) body {
 .widget-message-content li {
     margin-bottom: 4px;
 }
+
+/* Widget Action Bar */
+.widget-action-bar {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 20px 10px;
+    background: white;
+}
+
+/* LINE Connect Button */
+.line-connect-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #06C755;
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(6, 199, 85, 0.35);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.line-connect-btn:hover {
+    background: #04b34c;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(6, 199, 85, 0.5);
+    color: #ffffff;
+}
+
+.line-connect-btn:active {
+    transform: translateY(0);
+}
+
+.line-icon {
+    flex-shrink: 0;
+}
